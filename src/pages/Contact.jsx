@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import DATA from "../data/data";
 
-// Initialize EmailJS (ganti YOUR_PUBLIC_KEY dengan public key dari EmailJS)
-emailjs.init("QnDc7cJMFhCBZyRad");
+emailjs.init({ publicKey: "QnDc7cJMFhCBZyRad" });
 
 export default function Contact({ sectionRef }) {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
@@ -37,8 +36,10 @@ export default function Contact({ sectionRef }) {
         setTimeout(() => setStatus(""), 5000);
       }
     } catch (error) {
-      console.error("Error:", error);
-      setStatus("✗ Failed to send. Please try again.");
+      console.error("EmailJS send failed:", error);
+      const errorCode = error?.status ? ` (${error.status})` : "";
+      const errorMessage = error?.text || error?.message || "Unknown error";
+      setStatus(`✗ EmailJS${errorCode}: ${errorMessage}`);
     }
   };
 
@@ -183,7 +184,16 @@ export default function Contact({ sectionRef }) {
 
             {/* Status Message */}
             {status && (
-              <p className={`text-sm mb-4 font-semibold ${status.includes("✓") ? "text-green-400" : "text-red-400"}`}>
+              <p
+                role="status"
+                className={`text-sm mb-4 font-semibold ${
+                  status.startsWith("✓")
+                    ? "text-green-400"
+                    : status === "Sending..."
+                      ? "text-orange-300"
+                      : "text-red-400"
+                }`}
+              >
                 {status}
               </p>
             )}
