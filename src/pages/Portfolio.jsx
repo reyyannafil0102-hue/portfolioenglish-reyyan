@@ -56,6 +56,34 @@ function ProjectCard({ p }) {
   );
 }
 
+function CertificateCard({ certificate }) {
+  return (
+    <a
+      href={certificate.image}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`View ${certificate.title} certificate`}
+      className="group block overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 transition-all duration-300 hover:border-orange-500/40"
+    >
+      <div className="h-48 overflow-hidden bg-gray-950">
+        <img
+          src={certificate.image}
+          alt={`${certificate.title} certificate`}
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+      <div className="p-5">
+        <h3 className="font-bold text-base text-white sm:text-lg" style={{ fontFamily: "'Syne',sans-serif" }}>
+          {certificate.title}
+        </h3>
+        <p className="mt-2 text-sm text-orange-400" style={{ fontFamily: "'DM Sans',sans-serif" }}>
+          View Certificate →
+        </p>
+      </div>
+    </a>
+  );
+}
+
 export default function Portfolio({ sectionRef }) {
   return (
     <section
@@ -81,7 +109,21 @@ export default function Portfolio({ sectionRef }) {
           </p>
         </div>
 
+        <div className="mb-14">
+          <h3 className="mb-6 text-2xl font-bold text-white" style={{ fontFamily: "'Syne',sans-serif" }}>
+            Certificates
+          </h3>
+          <div className="grid max-w-2xl gap-5 sm:grid-cols-2 sm:gap-6">
+            {DATA.certificates.map((certificate) => (
+              <CertificateCard key={certificate.title} certificate={certificate} />
+            ))}
+          </div>
+        </div>
+
         {/* Project grid */}
+        <h3 className="mb-6 text-2xl font-bold text-white" style={{ fontFamily: "'Syne',sans-serif" }}>
+          Projects
+        </h3>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
           {DATA.projects.map((p) => (
             <ProjectCard key={p.title} p={p} />

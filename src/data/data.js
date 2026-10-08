@@ -48,6 +48,13 @@ const DATA = {
     },
   ],
 
+  certificates: [
+    {
+      title: "Java Fundamentals",
+      image: "/Foto/Reyyan Nafil Adiarsa_Java_Fundamentals-1.png",
+    },
+  ],
+
   cv: {
     personal: {
       fullName: "Reyyan Nafil Adiarsa",
